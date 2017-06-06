@@ -4,7 +4,21 @@ export class DateTime {
 
 	span: TimeSpan;
 
-	constructor(...args) {
+	
+	private _modelValue : string;
+	public get modelValue() : string {
+		return new DateTime(this.year(), this.month(), this.day()).format('yyyy-MM-dd');
+	}
+	public set modelValue(v : string) {		
+		this.abc(v.split('-'));
+		this._modelValue = v;
+	}
+
+	constructor(...arg){
+		this.abc(arg);
+	}
+
+	abc(args) {
 		let year = 0;
 		let month = 0;
 		let day = 0;
@@ -19,7 +33,7 @@ export class DateTime {
 				var d = new Date();
 				year = d.getFullYear();
 				month = d.getMonth() + 1;
-				day = d.getDay();
+				day = d.getDate();
 				hour = d.getHours();
 				minute = d.getMinutes();
 				second = d.getSeconds();
@@ -70,13 +84,13 @@ export class DateTime {
 	absoluteDays(year, month, day) {
 
 		function div(a, b) { return Math.round(a / b); }
-		var num = 0;
-		var num2 = 1;
-		var numArray = !this.isLeapYear(year) ? this.monthDays : this.monthDaysLeapYear;
+		let num = 0;
+		let num2 = 1;
+		let numArray = !this.isLeapYear(year) ? this.monthDays : this.monthDaysLeapYear;
 		while (num2 < month) {
 			num += numArray[num2++];
 		}
-		return ((((((day - 1) + num) + (365 * (year - 1))) + ((year - 1) / 4)) - ((year - 1) / 100)) + ((year - 1) / 400)); s
+		return ((((((day - 1) + num) + (365 * (year - 1))) + ((year - 1) / 4)) - ((year - 1) / 100)) + ((year - 1) / 400));
 	}
 
 	add(timespan) {
@@ -175,27 +189,21 @@ export class DateTime {
 
 
 	format(format) {
-		var shortdays = new Array("", this.strings.Mon, this.strings.Tue, this.strings.Wed, this.strings.Thu, this.strings.Fri, this.strings.Sat, this.strings.Sun);
-		var days = new Array("", this.strings.Monday, this.strings.Tuesday, this.strings.Wednesday, this.strings.Thursday, this.strings.Friday, this.strings.Saturday, this.strings.Sunday);
-		var shortmonths = new Array("", this.strings.Jan, this.strings.Feb, this.strings.Mar, this.strings.Apr, this.strings.May, this.strings.Jun, this.strings.Jul, this.strings.Aug, this.strings.Sep, this.strings.Oct, this.strings.Nov, this.strings.Dec);
-		var months = new Array("", this.strings.January, this.strings.February, this.strings.March, this.strings.April, this.strings.MayFull, this.strings.June, this.strings.July, this.strings.August, this.strings.September, this.strings.October, this.strings.November, this.strings.December);
+		let shortdays = new Array("", this.strings.Mon, this.strings.Tue, this.strings.Wed, this.strings.Thu, this.strings.Fri, this.strings.Sat, this.strings.Sun);
+		let days = new Array("", this.strings.Monday, this.strings.Tuesday, this.strings.Wednesday, this.strings.Thursday, this.strings.Friday, this.strings.Saturday, this.strings.Sunday);
+		let shortmonths = new Array("", this.strings.Jan, this.strings.Feb, this.strings.Mar, this.strings.Apr, this.strings.May, this.strings.Jun, this.strings.Jul, this.strings.Aug, this.strings.Sep, this.strings.Oct, this.strings.Nov, this.strings.Dec);
+		let months = new Array("", this.strings.January, this.strings.February, this.strings.March, this.strings.April, this.strings.MayFull, this.strings.June, this.strings.July, this.strings.August, this.strings.September, this.strings.October, this.strings.November, this.strings.December);
 
-		var day = this.day();
-		var dayOfWeek = this.dayOfWeek();
-		var millisecond = this.millisecond();
-		var hour = this.hour();
-		var minute = this.minute();
-		var second = this.second();
-		var month = this.month();
-		var year = this.year();
-
-		var data = new Array();
-
-		var yearstr = year + "";
-		/*
-		if(yearstr.length > 1)
-			yearstr = yearstr.substr(0, yearstr.length - 2)
-		*/
+		let day = this.day();
+		let dayOfWeek = this.dayOfWeek();
+		let millisecond = this.millisecond();
+		let hour = this.hour();
+		let minute = this.minute();
+		let second = this.second();
+		let month = this.month();
+		let year = this.year();
+		let data = new Array();
+		let yearstr = year + "";
 		data["dddd"] = days[dayOfWeek];
 		data["ddd"] = shortdays[dayOfWeek];
 		data["dd"] = this.span.pad(day);
@@ -225,10 +233,10 @@ export class DateTime {
 		data["/"] = this.strings.DateSeparator;
 
 
-		var output = "";
-		var res = format.split(/(dddd|ddd|dd|d|fff|ff|f|hh|h|HH|H||mm|m|MMMM|MMM|MM|M|ss|s|tt|t|yyyy|yyy|yy|y)?/);
+		let output = "";
+		let res = format.split(/(dddd|ddd|dd|d|fff|ff|f|hh|h|HH|H||mm|m|MMMM|MMM|MM|M|ss|s|tt|t|yyyy|yyy|yy|y)?/);
 
-		for (var i = 0; i < res.length; i++) {
+		for (let i = 0; i < res.length; i++) {
 			if (res[i]) {
 				if (data[res[i]]) {
 					output += data[res[i]];

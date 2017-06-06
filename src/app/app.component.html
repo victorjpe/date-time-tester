@@ -1,3 +1,11 @@
 <h1>
   {{title}}
 </h1>
+<b>{{ dateObjects.date() }}</b>
+
+<div class="form-group">
+  <label for="datepicker">Date label</label>
+  <input type="date"
+    class="form-control" name="datepicker" id="datepicker" aria-describedby="helpId" placeholder="date" [(ngModel)]="dateObjects.modelValue" >
+  <small id="helpId" class="form-text text-muted">Good</small>
+</div>
